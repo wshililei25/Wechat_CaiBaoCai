@@ -1,0 +1,21 @@
+<!--index.wxml-->
+<view class="container">
+  <text class="winNum">你已经获胜了<text>{{winNum}}</text>次</text>
+  <view class="showView">
+    <image class="imgL" src="{{imageAiSrc}}"></image>
+    <text class="winOrLost">{{gameResult}}</text>
+    <image class="imgR" src="{{imageUserSrc}}"></image>
+  </view>
+
+  <view class="chosseForUserView">
+    <text>出拳吧，少年</text>
+    <view class="chosse-v">
+      <block wx:for="{{srcs}}" wx:key="*this">
+        <view class="chosse-view" bindtap="chosseForChosse" id="{{index}}">
+          <image class="choose-image" src="{{item}}"></image>
+        </view>
+      </block>
+    </view>
+    <button class="againBtn" bindtap="again">再来</button>
+  </view>
+</view>
