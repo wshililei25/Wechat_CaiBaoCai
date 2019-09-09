@@ -1,6 +1,7 @@
 <!--index.wxml-->
 <view class="container">
-  <text class="winNum">你已经获胜了<text>{{winNum}}</text>次</text>
+  <text class="winNum">你已经获胜了
+      <text style="color:red">{{winNum}}</text>次</text>
   <view class="showView">
     <image class="imgL" src="{{imageAiSrc}}"></image>
     <text class="winOrLost">{{gameResult}}</text>

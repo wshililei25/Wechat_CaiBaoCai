@@ -5,6 +5,7 @@ let num = 0;
 Page({
   data: {
     winNum: 0,
+    btnState: false,
     imageAiSrc: '',
     imageUserSrc: '/images/timg.jpg',
     gameResult: '',
@@ -16,13 +17,22 @@ Page({
   },
 
   onLoad: function() {
+    let oldWinNum = wx.getStorageSync('winNum')
+    if (oldWinNum != null && oldWinNum != '') {
+      this.setData({
+        winNum: oldWinNum
+      })
+    }
     this.tiemGo()
   },
- 
+
   /**
    * 出拳
    */
   chosseForChosse(e) {
+    if (this.data.btnState) {
+      return
+    }
     console.log(e)
     this.setData({
       imageUserSrc: this.data.srcs[e.currentTarget.id]
@@ -36,45 +46,56 @@ Page({
 
     if (user == '/images/shitou.png' && ai == '/images/jiandao.png') {
       number++;
-      src = '你赢了';
+      str = '你赢了';
       wx.setStorageSync(
         'winNum', number
       )
     }
     if (user == '/images/jiandao.png' && ai == '/images/bu.png') {
       number++;
-      src = '你赢了';
+      str = '你赢了';
       wx.setStorageSync(
         'winNum', number
       )
     }
     if (user == '/images/bu.png' && ai == '/images/shitou.png') {
       number++;
-      src = '你赢了';
+      str = '你赢了';
       wx.setStorageSync(
         'winNum', number
       )
     }
-    if (user = ai) {
+    if (user == ai) {
       str = '平局'
     }
     this.setData({
       winNum: number,
       gameResult: str,
+      btnState: true
     })
+
   },
-  tiemGo: function () {
+  tiemGo: function() {
     timer = setInterval(this.move, 100) //开启定时器
   },
-  move: function () {
-    if (num >2) {
-      num = 0;
-    }
+  move: function() {
+    num = parseInt(Math.floor(Math.random() * 3))
     this.setData({
       imageAiSrc: this.data.srcs[num]
     })
-    num++;
   },
+  again() {
+    if (!this.data.btnState) {
+      return
+    }
+    this.tiemGo();
+    this.setData({
+      btnState: false,
+      gameResult: '',
+      imageUserSrc: '/images/timg.jpg'
+    })
+
+  }
 
 
 })
